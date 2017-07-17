@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if home %}
+  <p>Welcome to ACME Products! Our top selling product is
+    <a href="/products/{{id}}">{{ pdt }}</a></p>
+    <a href="/products">See All The Products!</a>
+{% endif %}
+
+{% if showPdt %}
+  <p><a href="/">Home</a></p>
+  <h1 class='product'>{{pdt}}</h1>
+  <p>Rating: {{rate}}</p>
+
+  <form method="POST" action="/products/{{id}}?_method=DELETE">
+    <button type="submit">Delete</button>
+  </form>
+
+  <!-- <form action="/products/:id" method="DELETE">
+    <input type="submit" value="Delete"/>
+  </form> -->
+{% endif %}
+
+{% if allPdt and showForm %}
+<form action="/products" method="POST">
+  <label for="name_field">Product Name:</label>
+  <input name="name" type="text" id="name_field"/><br>
+  <label for="text_field">Product Rating:</label>
+  <input name="text" type="text" id="text_field"/>
+
+  <input type="submit" value="Save" />
+  </form><br>
+
+  {% for pdt in pdts %}
+    <li id='all-products'><a href="/products/{{pdt.id}}">
+      {{pdt.product}}</a></li>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}
